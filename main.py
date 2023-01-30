@@ -53,3 +53,15 @@ if __name__ == '__main__':
             print("quit driver")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+'''
+    lines = int(input())
+    beforeConvertArr = []
+    afterConvertArr = []
+
+    for i in range(0, lines):
+        line = input()
+        beforeConvertArr.append(line.split('"')[1])
+
+    print(beforeConvertArr)
+'''
