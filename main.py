@@ -25,19 +25,45 @@ if __name__ == '__main__':
 
         wait = WebDriverWait(driver, 30)
 
-        print("------------- starting click -------------")
+        print("LOG-01\tclick pop-ups")
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))).click()
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "notifications-dialog-buttons-decline"))).click() #class 이름으로 검색할 때는 중간에 공백 불가
 
 
-        print("------------- search -------------")
-        driver.find_element(By.XPATH, "/html/body/div[4]/div/div[3]/div[1]/form/input").send_keys("Stormcaller Boroo")
+        print("LOG-02\tstart search")
+        #1줄짜리 데이터 "Stormcaller Boroo"
+        #3줄짜리 데이터 "Nokhud Saboteur"
+        driver.find_element(By.XPATH, "/html/body/div[4]/div/div[3]/div[1]/form/input").send_keys("Nokhud Saboteur")
         driver.find_element(By.XPATH, "/html/body/div[4]/div/div[3]/div[1]/a").click()
 
         time.sleep(5)
 
-        #/html/body/div[4]/div/div[4]/a[8]
-        driver.find_element(By.XPATH, "/html/body/div[4]/div/div[4]/a[8]").click()
+
+        '''
+        #stackoverflow
+        #이렇게 하면 th/tr과 /tbody/tr을 모두 찾아서 오차가 1 생긴다
+        table = driver.find_element(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table");
+
+        cnt = 0
+        for tr in table.find_elements(By.TAG_NAME, "tr"):
+            cnt += 1
+        
+        print(cnt)
+        '''
+        print("LOG-03\tsearching table")
+        list = driver.find_elements(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr");
+
+        print(len(list))
+
+        #한 줄짜리 테이블 XPath
+        #//*[@id="tab-npcs"]/div[2]/div/table
+        #row XPath
+        #//*[@id="tab-npcs"]/div[2]/div/table/tbody/tr/td[1]/a
+
+        #세 줄짜리 테이블 XPath
+        #//*[@id="tab-npcs"]/div[2]/div/table
+        #row XPath
+        #//*[@id="tab-npcs"]/div[2]/div/table/tbody/tr[1]/td[1]/a
 
 
 
