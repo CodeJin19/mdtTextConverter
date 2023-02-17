@@ -14,6 +14,8 @@ import datetime
 
 engList = []
 korList = []
+outputList = []
+
 
 def document_initialised(driver):
     return driver.execute_script("return initialised")
@@ -26,6 +28,7 @@ def searchListGenerator():
         line = input()
         engList.append(line.split('"')[1])
         korList.append("")
+        outputList.append("")
 
 def crawler():
     print("crawler CALL")
@@ -38,8 +41,8 @@ def crawler():
         wait = WebDriverWait(driver, 30)
 
         print("LOG-01\tclick pop-ups")
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))).click()
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located(
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "onetrust-accept-btn-handler"))).click()
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located(
             (By.CLASS_NAME, "notifications-dialog-buttons-decline"))).click()  # class 이름으로 검색할 때는 중간에 공백 불가
 
         for i in range(len(engList)):
@@ -78,6 +81,15 @@ def crawler():
 
             print("LOG-03-1\tlen(list) : " + str(len(list)))
 
+            '''
+            War Ohuna
+            LOG-03-1	len(list) : 0
+            ----------------------------------
+            error :
+            Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id='tab-npcs']/div[2]/div/table/tbody/tr[1]/td[1]/a"}
+              (Session info: chrome=110.0.5481.104)
+            '''
+
             if len(list) == 1:
                 driver.find_element(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr/td[1]/a").click()
             else:
@@ -88,9 +100,7 @@ def crawler():
             print("LOG-04-01\tswap language")
             driver.find_element(By.XPATH, "/html/body/div[4]/div/div[4]/a[8]").click()
 
-            time.sleep(1)
-
-            driver.find_element(By.XPATH, "/html/body/div[10]/div/div/div[2]/a[1]").click()
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[2]/a[1]"))).click()
 
             time.sleep(1)
 
@@ -100,13 +110,10 @@ def crawler():
             print(engList[i] + " : " + korList[i])
 
             print("LOG-04-02\tswap language")
-            #todo check Xpath
             driver.find_element(By.XPATH, "/html/body/div[4]/div/div[4]/a[8]").click()
 
-            time.sleep(1)
-
-            #todo check Xpath
-            driver.find_element(By.XPATH, "/html/body/div[10]/div/div/div[2]/a[1]").click()
+            WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[5]/a[1]"))).click()
 
             time.sleep(1)
 
@@ -126,7 +133,10 @@ if __name__ == '__main__':
 
     crawler()
 
-    print(engList)
-    print(korList)
+    for i in range(0, len(engList)):
+        outputList[i] = "L[\"" + engList[i] + "\"] = \"" + korList[i] + "\""
+
+    for i in range(0, len(outputList)):
+        print(outputList[i])
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
