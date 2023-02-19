@@ -5,8 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import datetime
 
-
-
 # This is a sample Python script.
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -106,7 +104,8 @@ def crawler():
                 print("LOG-04-01\tswap language")
                 driver.find_element(By.XPATH, "/html/body/div[4]/div/div[4]/a[8]").click()
 
-                WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[2]/a[1]"))).click()
+                #WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[2]/a[1]"))).click()
+                WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(), '한국어')]"))).click()
 
                 time.sleep(1)
 
@@ -118,8 +117,10 @@ def crawler():
                 print("LOG-04-02\tswap language")
                 driver.find_element(By.XPATH, "/html/body/div[4]/div/div[4]/a[8]").click()
 
-                WebDriverWait(driver, 30).until(
-                    EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[5]/a[1]"))).click()
+                #WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[10]/div/div/div[5]/a[1]"))).click()
+                WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, "menu-inner")))
+                menu = driver.find_element(By.CLASS_NAME, "menu-inner")
+                menu.find_element(By.XPATH, "//*[contains(text(), 'English')]").click()
 
                 time.sleep(1)
             except BaseException as e2:
@@ -145,8 +146,8 @@ if __name__ == '__main__':
     searchListGenerator()
 
     '''
-    engList = ["War Ohuna"]
-    korLIst = [""]
+    engList = ["Nokhud Neophyte"]
+    korList = [""]
     outputList = [""]
     '''
 
