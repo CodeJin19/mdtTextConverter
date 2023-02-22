@@ -20,7 +20,13 @@ def document_initialised(driver):
 
 def searchListGenerator():
     print("searchListGenerator CALL")
+    print("enter the number of lines to convert")
     lines = int(input())
+
+    if lines == 1:
+        print("enter " + lines + " line to convert")
+    else:
+        print("enter " + lines + " lines to convert")
 
     for i in range(0, lines):
         line = input()
