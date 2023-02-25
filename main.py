@@ -71,35 +71,25 @@ def crawler():
             print(cnt)
             '''
 
-            # 한 줄짜리 테이블 XPath
-            # //*[@id="tab-npcs"]/div[2]/div/table
-            # row XPath
-            # //*[@id="tab-npcs"]/div[2]/div/table/tbody/tr/td[1]/a
-
-            # 세 줄짜리 테이블 XPath
-            # //*[@id="tab-npcs"]/div[2]/div/table
-            # row XPath
-            # //*[@id="tab-npcs"]/div[2]/div/table/tbody/tr[1]/td[1]/a
-
             print("LOG-03\tsearching table")
-            list = driver.find_elements(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr");
+            list = driver.find_elements(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr")
 
             print("LOG-03-1\tlen(list) : " + str(len(list)))
 
-            '''
-            War Ohuna
-            LOG-03-1	len(list) : 0
-            ----------------------------------
-            error :
-            Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id='tab-npcs']/div[2]/div/table/tbody/tr[1]/td[1]/a"}
-              (Session info: chrome=110.0.5481.104)
-            '''
-
             if len(list) == 0:
-                #todo
-                print("ERROR AT " + engList[i])
-                continue
-            elif len(list) == 1:
+                try:
+                    driver.find_element(By.XPATH, "//*[@id='search-tabs']/div/ul/li[5]/a").click()
+                    list = driver.find_elements(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr")
+
+                    print("LOG-03-2\tlen(list) : " + str(len(list)))
+                except BaseException as e3:
+                    print("----------------------------------")
+                    print("error at " + engList[i] + " E3")
+                    print(e3)
+                    print("----------------------------------")
+
+
+            if len(list) == 1:
                 driver.find_element(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr/td[1]/a").click()
             else:
                 driver.find_element(By.XPATH, "//*[@id='tab-npcs']/div[2]/div/table/tbody/tr[1]/td[1]/a").click()
@@ -152,7 +142,7 @@ if __name__ == '__main__':
     searchListGenerator()
 
     '''
-    engList = ["Nokhud Neophyte"]
+    engList = ["Maruuk"]
     korList = [""]
     outputList = [""]
     '''
@@ -166,180 +156,3 @@ if __name__ == '__main__':
         print(outputList[i])
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-
-'''
-log
-D:\mdtTextConverter\venv\Scripts\python.exe D:\mdtTextConverter\main.py 
-searchListGenerator CALL
-10
-L["War Ohuna"] = "War Ohuna"
-L["Nokhud Neophyte"] = "Nokhud Neophyte"
-L["Desecrated Bakar"] = "Desecrated Bakar"
-L["Soulharvester Mandakh"] = "Soulharvester Mandakh"
-L["Risen Mystic"] = "Risen Mystic"
-L["Granyth"] = "Granyth"
-L["Nokhud Warhound"] = "Nokhud Warhound"
-L["Nokhud Plainstomper"] = "Nokhud Plainstomper"
-L["Primalist Thunderbeast"] = "Primalist Thunderbeast"
-L["Balakar Khan"] = "Balakar Khan"
-crawler CALL
-D:\mdtTextConverter\main.py:35: DeprecationWarning: executable_path has been deprecated, please pass in a Service object
-  driver = webdriver.Chrome('C:\ChromeDriver\chromedriver')
-LOG-01	click pop-ups
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 0
-ERROR AT War Ohuna
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 1
-LOG-04-01	swap language
-----------------------------------
-error at Nokhud Neophyte
-Message: 
-Stacktrace:
-Backtrace:
-	(No symbol) [0x00E137D3]
-	(No symbol) [0x00DA8B81]
-	(No symbol) [0x00CAB36D]
-	(No symbol) [0x00CDD382]
-	(No symbol) [0x00CDD4BB]
-	(No symbol) [0x00D13302]
-	(No symbol) [0x00CFB464]
-	(No symbol) [0x00D11215]
-	(No symbol) [0x00CFB216]
-	(No symbol) [0x00CD0D97]
-	(No symbol) [0x00CD253D]
-	GetHandleVerifier [0x0108ABF2+2510930]
-	GetHandleVerifier [0x010B8EC1+2700065]
-	GetHandleVerifier [0x010BC86C+2714828]
-	GetHandleVerifier [0x00EC3480+645344]
-	(No symbol) [0x00DB0FD2]
-	(No symbol) [0x00DB6C68]
-	(No symbol) [0x00DB6D4B]
-	(No symbol) [0x00DC0D6B]
-	BaseThreadInitThunk [0x759400F9+25]
-	RtlGetAppContainerNamedObjectPath [0x774D7BBE+286]
-	RtlGetAppContainerNamedObjectPath [0x774D7B8E+238]
-
-----------------------------------
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 2
-LOG-04-01	swap language
-Desecrated Bakar : 더럽혀진 바카르
-LOG-04-02	swap language
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 1
-LOG-04-01	swap language
-Soulharvester Mandakh : 영혼수확자 만다크
-LOG-04-02	swap language
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 1
-LOG-04-01	swap language
-Risen Mystic : 되살아난 비술사
-LOG-04-02	swap language
-----------------------------------
-error at Risen Mystic
-Message: 
-Stacktrace:
-Backtrace:
-	(No symbol) [0x00E137D3]
-	(No symbol) [0x00DA8B81]
-	(No symbol) [0x00CAB36D]
-	(No symbol) [0x00CDD382]
-	(No symbol) [0x00CDD4BB]
-	(No symbol) [0x00D13302]
-	(No symbol) [0x00CFB464]
-	(No symbol) [0x00D11215]
-	(No symbol) [0x00CFB216]
-	(No symbol) [0x00CD0D97]
-	(No symbol) [0x00CD253D]
-	GetHandleVerifier [0x0108ABF2+2510930]
-	GetHandleVerifier [0x010B8EC1+2700065]
-	GetHandleVerifier [0x010BC86C+2714828]
-	GetHandleVerifier [0x00EC3480+645344]
-	(No symbol) [0x00DB0FD2]
-	(No symbol) [0x00DB6C68]
-	(No symbol) [0x00DB6D4B]
-	(No symbol) [0x00DC0D6B]
-	BaseThreadInitThunk [0x759400F9+25]
-	RtlGetAppContainerNamedObjectPath [0x774D7BBE+286]
-	RtlGetAppContainerNamedObjectPath [0x774D7B8E+238]
-
-----------------------------------
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 0
-ERROR AT Granyth
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 3
-LOG-04-01	swap language
-Nokhud Warhound : [Nokhud Warhound] <[Tier 1 Beast]>
-LOG-04-02	swap language
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 1
-LOG-04-01	swap language
-Nokhud Plainstomper : 노쿠드 평야활보자
-LOG-04-02	swap language
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 1
-LOG-04-01	swap language
-Primalist Thunderbeast : 원시술사 천둥야수
-LOG-04-02	swap language
-LOG-02	start search
-LOG-03	searching table
-LOG-03-1	len(list) : 3
-LOG-04-01	swap language
-Balakar Khan : 발라카르 칸
-LOG-04-02	swap language
-----------------------------------
-error at Balakar Khan
-Message: 
-Stacktrace:
-Backtrace:
-	(No symbol) [0x00E137D3]
-	(No symbol) [0x00DA8B81]
-	(No symbol) [0x00CAB36D]
-	(No symbol) [0x00CDD382]
-	(No symbol) [0x00CDD4BB]
-	(No symbol) [0x00D13302]
-	(No symbol) [0x00CFB464]
-	(No symbol) [0x00D11215]
-	(No symbol) [0x00CFB216]
-	(No symbol) [0x00CD0D97]
-	(No symbol) [0x00CD253D]
-	GetHandleVerifier [0x0108ABF2+2510930]
-	GetHandleVerifier [0x010B8EC1+2700065]
-	GetHandleVerifier [0x010BC86C+2714828]
-	GetHandleVerifier [0x00EC3480+645344]
-	(No symbol) [0x00DB0FD2]
-	(No symbol) [0x00DB6C68]
-	(No symbol) [0x00DB6D4B]
-	(No symbol) [0x00DC0D6B]
-	BaseThreadInitThunk [0x759400F9+25]
-	RtlGetAppContainerNamedObjectPath [0x774D7BBE+286]
-	RtlGetAppContainerNamedObjectPath [0x774D7B8E+238]
-
-----------------------------------
-2023-02-18 13:50:42.754299
-quit driver
-L["War Ohuna"] = ""
-L["Nokhud Neophyte"] = ""
-L["Desecrated Bakar"] = "더럽혀진 바카르"
-L["Soulharvester Mandakh"] = "영혼수확자 만다크"
-L["Risen Mystic"] = "되살아난 비술사"
-L["Granyth"] = ""
-L["Nokhud Warhound"] = "[Nokhud Warhound] <[Tier 1 Beast]>"
-L["Nokhud Plainstomper"] = "노쿠드 평야활보자"
-L["Primalist Thunderbeast"] = "원시술사 천둥야수"
-L["Balakar Khan"] = "발라카르 칸"
-
-Process finished with exit code 0
-
-'''
